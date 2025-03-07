@@ -1,6 +1,5 @@
-<img width="50%" src="images/elint_ai.jpg">
+<img width="50%" src="images\Screenshot 2025-03-07 160340.png">
 
-[ELINT AI](http://elintdata.ai/)
 # Reimburse OCR AI Agent
 
 Reimburse OCR agent is a tool designed to automate the process of extracting and processing reimbursement data from receipts and invoices using OCR and AI Agents.
@@ -63,13 +62,7 @@ Run a Gradio instance by using iced_main.py and upload your documents on the gen
 
 ## Support
 
-For support, contact query@elintdata.ai.
-
-## Roadmap
-
-Best UI for such utility should be Whatsapp integration.
-Any Whatsapp API guru are most welcome. 
-Contact us at sumit.jha@elintdata.ai
+For support, contact chiragvashistha336@gmail.com .
 
 ## Contributing
 
@@ -77,13 +70,13 @@ Provide guidelines for contributing to the project, including how to submit issu
 
 ## Authors and acknowledgment
 
-* Chirag Vashistha ( Chirag.V@ElintData.ai ) 
+* Chirag Vashistha ( chiragvashistha336@gmail.com ) 
 
-* Sumit Jha ( Sumit.Jha@ElintData.ai )
+
 
 ## License
 
-Elint AI
+Open Source
 
 ## Project status
 

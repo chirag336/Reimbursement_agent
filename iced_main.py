@@ -25,6 +25,7 @@ from PIL import Image
 import numpy as np
 from IPython.display import display, Image as PILImage
 import gradio as gr
+import re
 
 
 
@@ -69,7 +70,7 @@ def creating_new_name(name):
       'extract_type': []
   }
   df = pd.DataFrame(data)
-  df.to_csv(f'/content/drive/MyDrive/reimbursement/storage/{name}.csv',index=False)
+  df.to_csv(f'/storage/{name}.csv',index=False)
 creating_new_name('sumit')
   
   
@@ -90,13 +91,18 @@ def run_tesseract(state:ReimburesemtAgent):
 
 def extract_price(state:ReimburesemtAgent):
     text = state['extracted_text']
+    text = re.sub(r'\.(\w{2})', '.', text)
     prompt = f'''I have extracted text from an OCR model of a bill or receipt of an expense I want to reimburese,
-    I want you to tell me the exact total value of the bill.
+    I want you to tell me the total amount paid.
+    
+    keep in mind to remove any rupees sign ₹ or any other currency sign and
 
-    return me just a number nothing else
+    
 
 
     The extracted text is :{text}
+    
+    answer in the format of just digits without decimals
     '''
 
     response = llm.invoke(prompt)
@@ -153,13 +159,13 @@ def saving_in_drive(state:ReimburesemtAgent):
     else:
       extract_type='other'
     # reading file
-    df = pd.read_csv(f'/content/drive/MyDrive/reimbursement/storage/{name}.csv')
+    df = pd.read_csv(rf'storage\{name}.csv')
     new_row = pd.DataFrame([[img_byte_arr, extract_text, extract_price, extract_type]],
                       columns=['image', 'extract_text', 'extract_price', 'extract_type'])
     # saving new file
     df = pd.concat([df, new_row], ignore_index=True)
     # df = df.sort_values(by='extract_price', ascending=False)
-    df.to_csv(f'/content/drive/MyDrive/reimbursement/storage/{name}.csv',index=False)
+    df.to_csv(rf'storage\{name}.csv',index=False)
 
 
 # Defining LangGraph
@@ -185,7 +191,7 @@ workflow.add_edge("save_in_drive", END)
 memory = MemorySaver()
 
 graph_plan = workflow.compile(checkpointer=memory)
-display(Image(graph_plan.get_graph(xray=1).draw_mermaid_png()))
+# display(Image(graph_plan.get_graph(xray=1).draw_mermaid_png()))
 
 
 # Getting a Gradio instance up
@@ -208,12 +214,20 @@ def process_image(image, name):
   img.save(img_byte_arr, format='JPEG')
   img_byte_arr = img_byte_arr.getvalue()
   state_input["the_image"] = img_byte_arr
+  state_input["name"] = name
   for event in graph_plan.stream(state_input, config, stream_mode=["updates"]):
-       print(f"Current node: {next(iter(event[1]))}")
+      print(f"Current node: {next(iter(event[1]))}")
 
   try:
-    df = pd.read_csv(f'/content/drive/MyDrive/reimbursement/storage/{name}.csv')
-    return df[['extract_price','extract_type']].to_html()
+    df = pd.read_csv(rf'C:\Users\Chira\Desktop\Reimbursement_agent\storage\{name}.csv')
+    df_html = df[['extract_price','extract_type']].to_html()
+    final_html = f"""
+    <h2>Table:</h2>
+    {df_html}
+    <h2>Total Amount:</h2>
+    <p>{df['extract_price'].sum()}</p>
+    """
+    return final_html
   except FileNotFoundError:
     return "Error: No such file found."
 
@@ -224,8 +238,8 @@ iface = gr.Interface(
         gr.Textbox(label="Your Name")
     ],
     outputs=gr.HTML(),
-    title="Image Processor",
+    title="Reimbursement Agent",
     description="Upload an image, it will be processed and the associated data from excel file will be shown."
 )
 
-iface.launch()
+iface.launch(share=True)

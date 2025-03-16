@@ -1,0 +1,67 @@
+image,Your Name,output,timestamp
+,chirag,"'
+    <h2>Table:</h2>
+    <table border=""1"" class=""dataframe"">
+  <thead>
+    <tr style=""text-align: right;"">
+      <th></th>
+      <th>extract_price</th>
+      <th>extract_type</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>1701</td>
+      <td>Travel</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>1001</td>
+      <td>Fuel</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>8906</td>
+      <td>Travel</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>28784</td>
+      <td>Hotel</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>14297</td>
+      <td>Travel</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>681</td>
+      <td>other</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>169</td>
+      <td>Travel</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>199</td>
+      <td>Travel</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>125</td>
+      <td>Travel</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>472</td>
+      <td>Travel</td>
+    </tr>
+  </tbody>
+</table>
+    <h2>Total Amount:</h2>
+    <p>56335</p>
+    ",2025-03-16 15:33:23.595554

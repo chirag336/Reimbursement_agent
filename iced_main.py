@@ -1,7 +1,6 @@
 from typing import Dict, TypedDict
 from langgraph.graph import StateGraph, END
 from langchain_core.prompts import ChatPromptTemplate
-from langchain_openai import ChatOpenAI
 from langgraph.checkpoint.memory import MemorySaver
 import pandas as pd
 from IPython.display import display, Image
@@ -30,7 +29,10 @@ import re
 
 
 load_dotenv()
-os.environ['GROQ_API_KEY'] = os.getenv('GROQ_API_KEY')
+# os.environ['GROQ_API_KEY'] = os.getenv('GROQ_API_KEY')
+os.environ['GROQ_API_KEY'] = "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"
+
+
 llm = ChatGroq(
     model="llama-3.3-70b-versatile",
     temperature=0,
@@ -70,8 +72,8 @@ def creating_new_name(name):
       'extract_type': []
   }
   df = pd.DataFrame(data)
-  df.to_csv(f'/storage/{name}.csv',index=False)
-creating_new_name('sumit')
+  df.to_csv(f'./storage/{name}.csv',index=False)
+creating_new_name('customer')
   
   
   
@@ -159,13 +161,13 @@ def saving_in_drive(state:ReimburesemtAgent):
     else:
       extract_type='other'
     # reading file
-    df = pd.read_csv(rf'storage\{name}.csv')
+    df = pd.read_csv(rf'./storage/{name}.csv')
     new_row = pd.DataFrame([[img_byte_arr, extract_text, extract_price, extract_type]],
                       columns=['image', 'extract_text', 'extract_price', 'extract_type'])
     # saving new file
     df = pd.concat([df, new_row], ignore_index=True)
     # df = df.sort_values(by='extract_price', ascending=False)
-    df.to_csv(rf'storage\{name}.csv',index=False)
+    df.to_csv(rf'./storage/{name}.csv',index=False)
 
 
 # Defining LangGraph
@@ -219,7 +221,7 @@ def process_image(image, name):
       print(f"Current node: {next(iter(event[1]))}")
 
   try:
-    df = pd.read_csv(rf'C:\Users\Chira\Desktop\Reimbursement_agent\storage\{name}.csv')
+    df = pd.read_csv(rf'./storage/{name}.csv')
     df_html = df[['extract_price','extract_type']].to_html()
     final_html = f"""
     <h2>Table:</h2>
@@ -235,7 +237,7 @@ iface = gr.Interface(
     fn=process_image,
     inputs=[
         gr.Image(type="filepath"), # Changed to filepath for image upload
-        gr.Textbox(label="Your Name")
+        gr.Radio(label="name", choices=["customer"])
     ],
     outputs=gr.HTML(),
     title="Reimbursement Agent",

@@ -233,15 +233,15 @@ def process_image(image, name):
   except FileNotFoundError:
     return "Error: No such file found."
 
-iface = gr.Interface(
-    fn=process_image,
-    inputs=[
-        gr.Image(type="filepath"), # Changed to filepath for image upload
-        gr.Radio(label="name", choices=["customer"])
-    ],
-    outputs=gr.HTML(),
-    title="Reimbursement Agent",
-    description="Upload an image, it will be processed and the associated data from excel file will be shown."
-)
+# iface = gr.Interface(
+#     fn=process_image,
+#     inputs=[
+#         gr.Image(type="filepath"), # Changed to filepath for image upload
+#         gr.Radio(label="name", choices=["customer"])
+#     ],
+#     outputs=gr.HTML(),
+#     title="Reimbursement Agent",
+#     description="Upload an image, it will be processed and the associated data from excel file will be shown."
+# )
 
-iface.launch(share=True)
+# iface.launch(share=True)

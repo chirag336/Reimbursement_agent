@@ -1,0 +1,16 @@
+---
+extract_data:
+  description: >
+    The reimbursement agent is responsible for extracting data from receipts and invoices
+    submitted by employees for reimbursement. The agent must accurately extract and
+    organize the data to ensure compliance with company policies and facilitate the
+    reimbursement process. This includes capturing key information such as date, amount,
+    vendor, and description of the expense.
+  expected_output:
+    - >
+      Accurate extraction and organization of data from receipts and invoices
+    - >
+      Verification of extracted data for accuracy and completeness
+    - >
+      Identification and flagging of discrepancies or missing information
+  agent: reimbursement_agent
